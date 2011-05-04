@@ -7,18 +7,18 @@ require 'java'
 # Short names for commonly used Java packages
 module Jena
   JENA = "com.hp.hpl.jena"
-  RDF = "#{JENA}.rdf"
-  MODEL = "#{RDF}.model"
-  UTIL = "#{RDF}.util"
-  VOCABULARY = "#{JENA}.vocabulary"
 end
 
-["#{Jena::MODEL}.ModelFactory",
- "#{Jena::MODEL}.Resource",
- "#{Jena::MODEL}.Literal",
- "#{Jena::MODEL}.RDFNode",
- "#{Jena::UTIL}.FileManager",
- "#{Jena::VOCABULARY}.RDF",
- "#{Jena::VOCABULARY}.RDFS",
- "#{Jena::VOCABULARY}.OWL"
-].each {|name| java_import name}
+# make some handy classes available in the top-level namespace
+module Jena
+  java_import com.hp.hpl.jena.rdf.model.ModelFactory
+  java_import com.hp.hpl.jena.rdf.model.Resource
+  java_import com.hp.hpl.jena.rdf.model.Literal
+  java_import com.hp.hpl.jena.rdf.model.RDFNode
+
+  java_import com.hp.hpl.jena.util.FileManager
+
+  java_import com.hp.hpl.jena.vocabulary.RDF
+  java_import com.hp.hpl.jena.vocabulary.RDFS
+  java_import com.hp.hpl.jena.vocabulary.OWL
+end

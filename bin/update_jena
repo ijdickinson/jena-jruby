@@ -23,9 +23,7 @@ end
 
 puts "Writing lib/jruby_jena/jars.rb ..."
 r = File.open( 'lib/jruby_jena/jars.rb', 'w' )
-r << "module Jena\n"
 Dir.glob( 'javalib/*.jar' ).each do |f|
-  r << "  require '#{f}'\n"
+  r << "require '#{f}'\n"
 end
-r << "end\n"
 r.close
