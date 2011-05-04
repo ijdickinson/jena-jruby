@@ -3,15 +3,15 @@ $:.push File.expand_path("../lib", __FILE__)
 require 'rubygems'
 require 'fileutils'
 require 'open-uri'
-require 'jruby_jena/version'
+load 'lib/jruby_jena/version.rb'
 
-LATEST_JENA="http://sourceforge.net/projects/jena/files/Jena/Jena-/jena-#{JENA::VERSION}.zip/download"
-OUTPUT="downloads/jena-#{JENA::VERSION}.zip"
+LATEST_JENA="http://sourceforge.net/projects/jena/files/Jena/Jena-#{Jena::VERSION}/jena-#{Jena::VERSION}.zip/download"
+OUTPUT="downloads/jena-#{Jena::VERSION}.zip"
 
 FileUtils.mkdir_p "downloads"
 
 unless File.exist? OUTPUT
-  puts "Downloading latest Jena ..."
+  puts "Downloading Jena #{Jena::VERSION}..."
   open( LATEST_JENA ) do |url|
     File.open( OUTPUT,"wb" ) do |file|
       file.puts url.read
@@ -19,4 +19,13 @@ unless File.exist? OUTPUT
   end
 end
 
-`unzip -j #{OUTPUT} **/lib/*.jar -d javalib`
+`unzip -jo #{OUTPUT} **/lib/*.jar -x '**/lib/junit*.jar' '**/lib/*tests.jar' -d javalib`
+
+puts "Writing lib/jruby_jena/jars.rb ..."
+r = File.open( 'lib/jruby_jena/jars.rb', 'w' )
+r << "module Jena\n"
+Dir.glob( 'javalib/*.jar' ).each do |f|
+  r << "  require '#{f}'\n"
+end
+r << "end\n"
+r.close

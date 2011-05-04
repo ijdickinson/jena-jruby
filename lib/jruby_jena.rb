@@ -1,22 +1,24 @@
-Dir.glob('jruby_jena/*.rb').each do |f|
-  require f.gsub( /\.rb$/, '' )
-end
+require 'java'
+[
+  'jruby_jena/jars',
+  'jruby_jena/version'
+].each {|f| require f}
 
 # Short names for commonly used Java packages
-module JENA
-  jena = "com.hp.hpl.jena"
-  rdf = "#{jena}.rdf"
-  model = "#{rdf}.model"
-  util = "#{rdf}.util"
-  vocabulary = "#{jena}.vocabulary"
+module Jena
+  JENA = "com.hp.hpl.jena"
+  RDF = "#{JENA}.rdf"
+  MODEL = "#{RDF}.model"
+  UTIL = "#{RDF}.util"
+  VOCABULARY = "#{JENA}.vocabulary"
 end
 
-["#{JENA::model}.ModelFactory",
- "#{JENA::model}.Resource",
- "#{JENA::model}.Literal",
- "#{JENA::model}.RDFNode",
- "#{JENA::util}.FileManager",
- "#{JENA::vocabulary}.RDF",
- "#{JENA::vocabulary}.RDFS",
- "#{JENA::vocabulary}.OWL"
+["#{Jena::MODEL}.ModelFactory",
+ "#{Jena::MODEL}.Resource",
+ "#{Jena::MODEL}.Literal",
+ "#{Jena::MODEL}.RDFNode",
+ "#{Jena::UTIL}.FileManager",
+ "#{Jena::VOCABULARY}.RDF",
+ "#{Jena::VOCABULARY}.RDFS",
+ "#{Jena::VOCABULARY}.OWL"
 ].each {|name| java_import name}
