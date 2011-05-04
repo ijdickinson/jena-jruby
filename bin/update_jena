@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+$:.push File.expand_path("../lib", __FILE__)
+require 'rubygems'
+require 'fileutils'
+require 'open-uri'
+require 'jruby_jena/version'
+
+LATEST_JENA="http://sourceforge.net/projects/jena/files/Jena/Jena-/jena-#{JENA::VERSION}.zip/download"
+OUTPUT="downloads/jena-#{JENA::VERSION}.zip"
+
+FileUtils.mkdir_p "downloads"
+
+unless File.exist? OUTPUT
+  puts "Downloading latest Jena ..."
+  open( LATEST_JENA ) do |url|
+    File.open( OUTPUT,"wb" ) do |file|
+      file.puts url.read
+    end
+  end
+end
+
+`unzip -j #{OUTPUT} **/lib/*.jar -d javalib`
