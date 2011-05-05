@@ -4,7 +4,7 @@ load "lib/jruby_jena/version.rb"
 
 Gem::Specification.new do |s|
   s.name        = "jruby-jena"
-  s.version     = Jena::VERSION
+  s.version     = Jena::JRUBY_JENA_GEM_VERSION
   s.platform    = Gem::Platform.new("java")
   s.authors     = ["Ian Dickinson"]
   s.email       = ["ian@epimorphics.com"]

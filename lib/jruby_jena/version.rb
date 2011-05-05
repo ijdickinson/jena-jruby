@@ -1,3 +1,4 @@
 module Jena
-  VERSION='2.6.4'
+  JENA_VERSION='2.6.4'
+  JRUBY_JENA_GEM_VERSION='0.1.0'
 end
