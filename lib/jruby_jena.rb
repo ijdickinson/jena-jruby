@@ -1,7 +1,8 @@
 require 'java'
 [
   'jruby_jena/jars',
-  'jruby_jena/version'
+  'jruby_jena/version',
+  'jruby_jena/query_utils'
 ].each {|f| require f}
 
 # Short names for commonly used Java packages
@@ -21,4 +22,7 @@ module Jena
   java_import com.hp.hpl.jena.vocabulary.RDF
   java_import com.hp.hpl.jena.vocabulary.RDFS
   java_import com.hp.hpl.jena.vocabulary.OWL
+
+  java_import com.hp.hpl.jena.query.QueryFactory
+  java_import com.hp.hpl.jena.query.QueryExecutionFactory
 end
