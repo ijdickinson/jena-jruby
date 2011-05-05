@@ -22,18 +22,10 @@ module Jena
   # @param options [Hash] Options (see above)
   # @param *vars [String] Optional variables to project from results
   def self.query_select( m, query, options = nil, *vars )
-    results = []
-
-    q = com.hp.hpl.jena.query.Query.new
-    q.setPrefixMapping( as_prefix_map options[:ns] ) if has_option? options, :ns
-
-    baseURI = option options, :baseURI, nil
-    syntax = option options, :syntax, com.hp.hpl.jena.query.Syntax.syntaxSPARQL_11
-
-    QueryFactory.parse( q, query, baseURI, syntax )
-    qexec = QueryExecutionFactory.create( q, m, as_bindings( option options, :bindings, nil ) )
+    qexec = setup_query_execution( m, query, options )
 
     begin
+      results = []
       qexec.execSelect.each do |soln|
         results << project_variables( soln, vars )
       end
@@ -42,6 +34,22 @@ module Jena
     end
 
     results
+  end
+
+  # Perform a select query as per {#query_select}, but returns only the first
+  # result, if defined, or nil
+  def self.query_select_first( m, query, options = nil, *vars )
+    qexec = setup_query_execution( m, query, options )
+    result = nil
+
+    begin
+      rs = qexec.execSelect
+      result = project_variables( rs.next, vars ) if rs.hasNext
+    ensure
+      qexec.close
+    end
+
+    result
   end
 
   # Project variables from a result set entry, returning a `Hash` of variable
@@ -89,5 +97,19 @@ module Jena
 
   def self.has_option?( options, opt )
     options && options.has_key?( opt )
+  end
+
+  # Common part of setting up a query execution
+  def self.setup_query_execution( m, query, options )
+    q = com.hp.hpl.jena.query.Query.new
+    q.setPrefixMapping( as_prefix_map options[:ns] ) if has_option? options, :ns
+
+    baseURI = option options, :baseURI, nil
+    syntax = option options, :syntax, com.hp.hpl.jena.query.Syntax.syntaxSPARQL_11
+
+    QueryFactory.parse( q, query, baseURI, syntax )
+    qexec = QueryExecutionFactory.create( q, m, as_bindings( option options, :bindings, nil ) )
+
+    qexec
   end
 end

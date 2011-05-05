@@ -86,4 +86,21 @@ class QueryUtilsTest < Test::Unit::TestCase
 
     assert_equal @r0, result[0][:s]
   end
+
+  # Get only one result
+  def test_query_select_first
+    @m.add @r0, Jena::RDFS.comment, "this is another test"
+
+    result = Jena.query_select @m, "select * {?s ?p ?o}"
+    assert_equal 2, result.size
+
+    result = Jena.query_select @m, "select * {?s ?p 42}"
+    assert_equal 0, result.size
+
+    result = Jena.query_select_first @m, "select * {?s ?p ?o}"
+    assert_equal @r0, result[:s]
+
+    result = Jena.query_select_first @m, "select * {?s ?p 42}"
+    assert_nil result
+  end
 end
