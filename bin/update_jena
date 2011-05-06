@@ -5,13 +5,13 @@ require 'fileutils'
 require 'open-uri'
 load 'lib/jruby_jena/version.rb'
 
-LATEST_JENA="http://sourceforge.net/projects/jena/files/Jena/Jena-#{Jena::VERSION}/jena-#{Jena::VERSION}.zip/download"
-OUTPUT="downloads/jena-#{Jena::VERSION}.zip"
+LATEST_JENA="http://sourceforge.net/projects/jena/files/Jena/Jena-#{Jena::JENA_VERSION}/jena-#{Jena::JENA_VERSION}.zip/download"
+OUTPUT="downloads/jena-#{Jena::JENA_VERSION}.zip"
 
 FileUtils.mkdir_p "downloads"
 
 unless File.exist? OUTPUT
-  puts "Downloading Jena #{Jena::VERSION}..."
+  puts "Downloading Jena #{Jena::JENA_VERSION}..."
   open( LATEST_JENA ) do |url|
     File.open( OUTPUT,"wb" ) do |file|
       file.puts url.read
@@ -24,6 +24,7 @@ end
 puts "Writing lib/jruby_jena/jars.rb ..."
 r = File.open( 'lib/jruby_jena/jars.rb', 'w' )
 Dir.glob( 'javalib/*.jar' ).each do |f|
-  r << "require '#{f}'\n"
+  f =~ /javalib\/(.*)\.jar/
+  r << "require '#{$1}'\n"
 end
 r.close
