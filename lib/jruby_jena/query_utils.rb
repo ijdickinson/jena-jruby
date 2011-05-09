@@ -21,6 +21,7 @@ module Jena
   # @param query [String] The query to run
   # @param options [Hash] Options (see above)
   # @param *vars [String] Optional variables to project from results
+  # @return [Array] Non-empty array of hashes, one per result
   def self.query_select( m, query, options = nil, *vars )
     qexec = setup_query_execution( m, query, options )
 
@@ -50,6 +51,23 @@ module Jena
     end
 
     result
+  end
+
+  # Perform a SPARQL describe query. Options as per {#query_select},
+  # but this call returns a `Model`.
+  #
+  # @param m [Model] The model to run the query against
+  # @param query [String] The query to run
+  # @param options [Hash] Options (see above)
+  # @return [Array] Non-empty array of hashes, one per result
+  def query_describe( m, query, options = nil )
+    qexec = setup_query_execution( m, query, options )
+
+    begin
+      return qexec.execDescribe
+    ensure
+      qexec.close
+    end
   end
 
   # Project variables from a result set entry, returning a `Hash` of variable
@@ -89,6 +107,14 @@ module Jena
     pm
   end
 
+  # A mutable collection of well-known namespace prefixes, which can
+  # be used as a basis for building up a larger collection
+  def self.useful_prefixes
+    pm = com.hp.hpl.jena.shared.impl.PrefixMappingImpl.new
+    pm.setNsPrefixes( com.hp.hpl.jena.shared.PrefixMapping.Standard )
+    pm
+  end
+
   :private
 
   def self.option( options, opt, default )
@@ -102,7 +128,8 @@ module Jena
   # Common part of setting up a query execution
   def self.setup_query_execution( m, query, options )
     q = com.hp.hpl.jena.query.Query.new
-    q.setPrefixMapping( as_prefix_map options[:ns] ) if has_option? options, :ns
+
+    q.setPrefixMapping has_option?( options, :ns ) ? as_prefix_map( options[:ns] ) : useful_prefixes
 
     baseURI = option options, :baseURI, nil
     syntax = option options, :syntax, com.hp.hpl.jena.query.Syntax.syntaxSPARQL_11
