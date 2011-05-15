@@ -13,6 +13,7 @@ end
 # make some handy classes available in the top-level namespace
 module Jena
   java_import com.hp.hpl.jena.rdf.model.ModelFactory
+  java_import com.hp.hpl.jena.rdf.model.ResourceFactory
   java_import com.hp.hpl.jena.rdf.model.Resource
   java_import com.hp.hpl.jena.rdf.model.Literal
   java_import com.hp.hpl.jena.rdf.model.RDFNode

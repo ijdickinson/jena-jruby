@@ -60,7 +60,7 @@ module Jena
   # @param query [String] The query to run
   # @param options [Hash] Options (see above)
   # @return [Array] Non-empty array of hashes, one per result
-  def query_describe( m, query, options = nil )
+  def self.query_describe( m, query, options = nil )
     qexec = setup_query_execution( m, query, options )
 
     begin
