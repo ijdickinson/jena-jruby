@@ -23,17 +23,8 @@ module Jena
   # @param *vars [String] Optional variables to project from results
   # @return [Array] Non-empty array of hashes, one per result
   def self.query_select( m, query, options = nil, *vars )
-    qexec = setup_query_execution( m, query, options )
-
-    begin
-      results = []
-      qexec.execSelect.each do |soln|
-        results << project_variables( soln, vars )
-      end
-    ensure
-      qexec.close
-    end
-
+    results = []
+    query_select_each( m, query, options, *vars ) {|soln| results << soln}
     results
   end
 
@@ -51,6 +42,20 @@ module Jena
     end
 
     result
+  end
+
+  # Perform a select query as per {#query_select}, but rather than accumulate
+  # an array of results, we yield to the associated block with each solution
+  def self.query_select_each( m, query, options = nil, *vars )
+    qexec = setup_query_execution( m, query, options )
+
+    begin
+      qexec.execSelect.each do |soln|
+        yield project_variables( soln, vars )
+      end
+    ensure
+      qexec.close
+    end
   end
 
   # Perform a SPARQL describe query. Options as per {#query_select},
