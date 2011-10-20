@@ -2,6 +2,7 @@ require 'java'
 %w[
   jars
   version
+  utils
   query_utils
 ].each {|f| require "jruby_jena/#{f}"}
 
