@@ -158,4 +158,10 @@ module Jena
     java_import com.hp.hpl.jena.ontology.TransitiveProperty
     java_import com.hp.hpl.jena.ontology.UnionClass
   end
+
+  module TDB
+    java_import com.hp.hpl.jena.tdb.TDB
+    java_import com.hp.hpl.jena.tdb.TDBLoader
+    java_import com.hp.hpl.jena.tdb.TDBFactory
+  end
 end
