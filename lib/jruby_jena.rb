@@ -76,6 +76,16 @@ module Jena
     java_import com.hp.hpl.jena.util.Tokenizer
     java_import com.hp.hpl.jena.util.TypedStream
     java_import com.hp.hpl.jena.util.URIref
+    java_import com.hp.hpl.jena.shared.Command
+    java_import com.hp.hpl.jena.shared.Lock
+    java_import com.hp.hpl.jena.shared.LockMRSW
+    java_import com.hp.hpl.jena.shared.LockMutex
+    java_import com.hp.hpl.jena.shared.LockNone
+    java_import com.hp.hpl.jena.shared.PrefixMapping
+    java_import com.hp.hpl.jena.shared.RandomOrderGraph
+    java_import com.hp.hpl.jena.shared.ReificationStyle
+    java_import com.hp.hpl.jena.shared.uuid.JenaUUID
+    java_import com.hp.hpl.jena.shared.uuid.UUIDFactory
   end
 
   module Vocab

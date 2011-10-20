@@ -11,6 +11,11 @@ module Jena
       end
       pm
     end
+
+    # Return a new resource URN made from a UUID
+    def uuid_resource
+      Core::ResourceFactory.createResource( Util::JenaUUID.factory.generate.asURN )
+    end
   end
 
   module Query
