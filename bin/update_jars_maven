@@ -1,0 +1,31 @@
+#!/bin/bash
+# Collect the .jar files necessary to build the gem by running
+# maven in the context of TDB
+# Execute in root directory of jruby_jena
+
+# Default TDB location
+# Can be overridden by exporting JENA_TDB_ROOT
+tdb_root=${JENA_TDB_ROOT:-~/workspace/apache-jena-tdb}
+
+echo "Changing to TDB directory $tdb_root"
+pushd $tdb_root
+
+echo "Cleaning old versions and recompiling ..."
+mvn -DskipTests=true clean install
+
+echo "Collecting dependencies ..."
+mvn dependency:copy-dependencies
+
+popd
+echo "Changing directory back to `pwd`"
+echo "Copying deps to ./javalib"
+mkdir -p javalib
+cp $tdb_root/target/dependency/*.jar javalib
+cp $tdb_root/target/tdb-*SNAPSHOT.jar $tdb_root/target/tdb-*{0,1,2,3,4,5,6,7,8,9}.jar javalib  2>/dev/null
+rm -f javalib/*test*.jar
+
+echo "Creating log4j config"
+jar -cf javalib/log4j-config.jar log4j.xml
+
+
+
