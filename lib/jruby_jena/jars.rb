@@ -12,7 +12,7 @@ lucene-core-2.3.1
 slf4j-api-1.6.1
 slf4j-log4j12-1.6.1
 stax-api-1.0.1
-tdb-0.8.11-SNAPSHOT
+tdb-0.9.0-SNAPSHOT
 wstx-asl-3.2.9
 xercesImpl-2.7.1
 ].each {|jar| require jar}
