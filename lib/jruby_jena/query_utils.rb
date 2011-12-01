@@ -48,11 +48,15 @@ module Jena
     # Perform a select query as per {#select}, but rather than accumulate
     # an array of results, we yield to the associated block with each solution
     def self.select_each( m, query, options = nil, *vars )
-      qexec = setup_query_execution( m, query, options )
+      select_each_qe( setup_query_execution( m, query, options ), *vars )
+    end
 
+    # Perform a select query using the given query execution, yielding to the
+    # associated block for each solution
+    def self.select_each_qe( qexec, *vars )
       begin
         qexec.execSelect.each do |soln|
-          yield project_variables( soln, vars )
+          yield project_variables( soln, *vars )
         end
       ensure
         qexec.close
@@ -109,6 +113,39 @@ module Jena
       pm
     end
 
+    # Return true if a string represents a valid SPARQL query.
+    def self.valid?( query_string, syntax = Jena::Query::Syntax.syntaxSPARQL_11 )
+      q = Jena::Query::QueryFactory.create
+
+      begin
+        Jena::Query::QueryFactory.parse( q, query_string, nil, syntax )
+        return true
+      rescue
+      end
+
+      false
+    end
+
+    # Return a QueryExecution for executing the given query against a
+    # remote SPARQL service endpoint
+    def self.sparql_service( url, query )
+      Jena::Query::QueryExecutionFactory.sparqlService( url, query )
+    end
+
+    # Return a list of the solutions to executing the given select query
+    # against the given remote SPARQL endpoint
+    def self.service_select( url, query, *vars )
+      results = []
+      select_each_qe( sparql_service( url, query ), *vars ) {|soln| results << soln}
+      results
+    end
+
+    # Yield to the associated block for each solution to the given query against
+    # the given SPARQL service endpoint URL
+    def self.service_select_each( url, query, *vars, &block )
+      select_each_qe( sparql_service( url, query ), *vars, &block )
+    end
+
     :private
 
     def self.option( options, opt, default )
@@ -125,13 +162,14 @@ module Jena
 
       q.setPrefixMapping has_option?( options, :ns ) ? Util::as_prefix_map( options[:ns] ) : useful_prefixes
 
-      baseURI = option options, :baseURI, nil
-      syntax = option options, :syntax, com.hp.hpl.jena.query.Syntax.syntaxSPARQL_11
+      baseURI = option( options, :baseURI, nil )
+      syntax = option( options, :syntax, com.hp.hpl.jena.query.Syntax.syntaxSPARQL_11 )
 
       QueryFactory.parse( q, query, baseURI, syntax )
-      qexec = QueryExecutionFactory.create( q, m, as_bindings( option options, :bindings, nil ) )
+      qexec = QueryExecutionFactory.create( q, m, as_bindings( option( options, :bindings, nil ) ) )
 
       qexec
     end
+
   end
 end
