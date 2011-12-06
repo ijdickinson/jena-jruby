@@ -1,10 +1,5 @@
 require 'java'
-%w[
-  jars
-  version
-  utils
-  query_utils
-].each {|f| require "jruby_jena/#{f}"}
+require 'jruby_jena/jars'
 
 # Short names for commonly used Java packages
 module Jena
@@ -176,3 +171,10 @@ module Jena
     java_import com.hp.hpl.jena.tdb.TDBFactory
   end
 end
+
+%w[
+  version
+  utils
+  query_utils
+  node_utils
+].each {|f| require "jruby_jena/#{f}"}

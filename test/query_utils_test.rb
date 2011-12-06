@@ -1,7 +1,6 @@
 $LOAD_PATH.push "#{File.dirname(__FILE__)}/../lib"
 require "rubygems"
 require "test/unit"
-#require "test/unit/runner/tk"
 require "jruby_jena"
 
 class QueryUtilsTest < Test::Unit::TestCase
