@@ -21,7 +21,7 @@ module Jena
     # Return an array of the datatype of the given literal, if defined,
     # and including the default_type if non-nil
     def self.literal_types( node, default_type = nil )
-      types = node.getDatatype || []
+      types = node.getDatatype.to_a || []
       with_default_type( types, default_type )
     end
 
