@@ -37,7 +37,7 @@ module Jena
 
       begin
         rs = qexec.execSelect
-        result = project_variables( rs.next, vars ) if rs.hasNext
+        result = project_variables( rs.next, *vars ) if rs.hasNext
       ensure
         qexec.close
       end
@@ -47,8 +47,8 @@ module Jena
 
     # Perform a select query as per {#select}, but rather than accumulate
     # an array of results, we yield to the associated block with each solution
-    def self.select_each( m, query, options = nil, *vars )
-      select_each_qe( setup_query_execution( m, query, options ), *vars )
+    def self.select_each( m, query, options = nil, *vars, &block )
+      select_each_qe( setup_query_execution( m, query, options ), *vars, &block )
     end
 
     # Perform a select query using the given query execution, yielding to the
@@ -56,7 +56,7 @@ module Jena
     def self.select_each_qe( qexec, *vars )
       begin
         qexec.execSelect.each do |soln|
-          yield project_variables( soln, *vars )
+          yield( project_variables( soln, *vars ) )
         end
       ensure
         qexec.close
@@ -82,7 +82,7 @@ module Jena
 
     # Project variables from a result set entry, returning a `Hash` of variable
     # names to values
-    def self.project_variables( soln, vars )
+    def self.project_variables( soln, *vars )
       nn = Hash.new
 
       vs = vars || []
