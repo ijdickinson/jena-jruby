@@ -38,4 +38,34 @@ class NodeUtilsTest < Test::Unit::TestCase
 
     assert_equal [:dummy], Jena::Node.types( @m.createLiteral( "foo" ), :dummy )
   end
+
+  def test_resolve_properties
+    p = @m.createProperty( "http://example.com/p" )
+    assert_equal [p], @r0.resolve_properties( [p] )
+    assert_equal [p], @r0.resolve_properties( ["http://example.com/p"] )
+    @m.setNsPrefix( "eg", "http://example.com/" )
+    assert_equal [p], @r0.resolve_properties( ["eg:p"] )
+  end
+
+  def test_property_values
+    assert_equal [@r1], @r0.property_values( Jena::Vocab::RDF.type )
+    assert_equal [@r1], @r0.property_values( Jena::Vocab::RDF.type.getURI )
+    @m.setNsPrefix( "rdf", Jena::Vocab::RDF.getURI )
+    assert_equal [@r1], @r0.property_values( "rdf:type" )
+  end
+
+  def test_property_values_with_explicit_model
+    @m.setNsPrefix( "rdf", Jena::Vocab::RDF.getURI )
+
+    # r is not attached to any model
+    r = Jena::Core::ResourceFactory.createResource( @r0.getURI )
+
+    assert_equal [], r.property_values( Jena::Vocab::RDF.type )
+    assert_equal [], r.property_values( Jena::Vocab::RDF.type.getURI )
+    assert_equal [], r.property_values( "rdf:type" )
+
+    assert_equal [@r1], r.property_values( Jena::Vocab::RDF.type, @m )
+    assert_equal [@r1], r.property_values( Jena::Vocab::RDF.type.getURI, @m )
+    assert_equal [@r1], r.property_values( "rdf:type", @m )
+  end
 end

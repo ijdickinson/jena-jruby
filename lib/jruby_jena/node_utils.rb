@@ -21,7 +21,7 @@ module Jena
     # Return an array of the datatype of the given literal, if defined,
     # and including the default_type if non-nil
     def self.literal_types( node, default_type = nil )
-      types = node.getDatatype.to_a || []
+      types = node.getDatatype ? [node.getDatatype] : []
       with_default_type( types, default_type )
     end
 
@@ -55,6 +55,52 @@ module Java
       # subject is this resource.
       def each_property( property = nil, &block )
         listProperties( property ).each( &block )
+      end
+
+      # Return a list of the values of the given properties of this resource. Each property
+      # may be specified as a +Property+ object, a string denoting the URI, or a string
+      # denoting the URI in <tt>prefix:name</tt> format, which will be expanded using the
+      # prefix table attached to the resource's model
+      def property_values( props = nil, model = nil )
+        model ||= getModel
+        return [] unless model
+
+        values = []
+        resolve_properties( props, model ).each do |p|
+          model.listStatements( self, p, nil ).each do |stmt|
+            values << stmt.getObject
+          end
+        end
+        values
+      end
+
+      # Return a list of Jena +Property+ objects corresponding to the list of property
+      # names +props+. Each member of +props+ is either
+      # * a +Property+ object, which is returned unchanged
+      # * a URI string, which is converted to a +Property+
+      # * an abbreviated URI in <tt>prefix:name</tt> form, which is expanded using the prefixes
+      #   defined in the current model before being converted to a +Property+ object
+      #
+      # In the special case of <tt>props = nil</tt>, the returned list is all of the distinct
+      # properties attached to this resource
+      def resolve_properties( props = nil, model = nil )
+        props = [props] unless props.is_a? Array
+        model ||= self.getModel
+
+        unless props
+          return model.listStatements( self, nil, nil ).map {|stmt| stmt.getPredicate} .uniq
+        end
+
+        props.map do |p|
+          case
+          when p.is_a?( Jena::Core::Property )
+            p
+          when model
+            model.getProperty( model.expandPrefix( p ) )
+          else
+            Jena::Core::ResourceFactory.getProperty( p )
+          end
+        end
       end
     end
   end
