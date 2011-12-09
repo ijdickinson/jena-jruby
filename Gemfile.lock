@@ -1,8 +1,10 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    builder (3.0.0)
 
 PLATFORMS
   java
 
 DEPENDENCIES
+  builder

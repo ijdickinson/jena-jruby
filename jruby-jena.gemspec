@@ -20,4 +20,6 @@ Gem::Specification.new do |s|
 
   s.extra_rdoc_files = ["README.md"]
 
+  s.add_dependency( 'haml' )
+  s.add_dependency( 'builder' )
 end

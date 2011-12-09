@@ -1,5 +1,6 @@
 require 'java'
 require 'jruby_jena/jars'
+require 'builder'
 
 # Short names for commonly used Java packages
 module Jena
@@ -177,4 +178,5 @@ end
   utils
   query_utils
   node_utils
+  namespace
 ].each {|f| require "jruby_jena/#{f}"}
