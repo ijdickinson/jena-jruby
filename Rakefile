@@ -25,3 +25,13 @@ namespace :test do
   end
 
 end
+
+require 'rdoc/task'
+Rake::RDocTask.new do |rdoc|
+  version = File.exist?('lib/rdf_renderer/VERSION') ? File.read('lib/rdf_renderer/VERSION') : ""
+
+  rdoc.rdoc_dir = 'rdoc'
+  rdoc.title = "RDF Renderer #{version}"
+  rdoc.rdoc_files.include('README*')
+  rdoc.rdoc_files.include('lib/**/*.rb')
+end
