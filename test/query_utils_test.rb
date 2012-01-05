@@ -1,7 +1,7 @@
 $LOAD_PATH.push "#{File.dirname(__FILE__)}/../lib"
 require "rubygems"
 require "test/unit"
-require "jruby_jena"
+require "jena_jruby"
 
 class QueryUtilsTest < Test::Unit::TestCase
 
