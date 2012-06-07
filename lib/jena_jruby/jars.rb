@@ -1,19 +1,19 @@
-%w[
-commons-codec-1.5
-hamcrest-core-1.1
-httpclient-4.1.2
-httpcore-4.1.3
-icu4j-3.4.4
-jena-arq-2.9.0-incubating
-jena-core-2.7.0-incubating
-jena-iri-0.9.0-incubating
-jena-tdb-0.9.0-incubating-SNAPSHOT
-junit-4.9
-log4j-1.2.16
-slf4j-api-1.6.4
-slf4j-log4j12-1.6.4
-xercesImpl-2.10.0
-xml-apis-1.4.01
-log4j-config
-].each {|jar| require jar}
+# Note: important to get these in reverse dependency order
+# Use mvn dependency:tree to show deps from the pom.xml
 
+%w[
+log4j-1.2.16.jar
+slf4j-api-1.6.4.jar
+slf4j-log4j12-1.6.4.jar
+commons-codec-1.5.jar
+httpclient-4.1.2.jar
+httpcore-4.1.3.jar
+jena-iri-0.9.1-SNAPSHOT.jar
+xercesImpl-2.10.0.jar
+xml-apis-1.4.01.jar
+jena-core-2.7.1-SNAPSHOT.jar
+jena-arq-2.9.1-SNAPSHOT.jar
+jena-tdb-0.9.1-SNAPSHOT.jar
+].each do |jar|
+  require jar
+end

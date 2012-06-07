@@ -86,25 +86,7 @@ module Jena
   end
 
   module Vocab
-    java_import com.hp.hpl.jena.vocabulary.DB
-    java_import com.hp.hpl.jena.vocabulary.DC_10
-    java_import com.hp.hpl.jena.vocabulary.DC_11
-    java_import com.hp.hpl.jena.vocabulary.DC
-    java_import com.hp.hpl.jena.vocabulary.DCTerms
-    java_import com.hp.hpl.jena.vocabulary.DCTypes
-    java_import com.hp.hpl.jena.vocabulary.LocationMappingVocab
-    java_import com.hp.hpl.jena.vocabulary.OntDocManagerVocab
-    java_import com.hp.hpl.jena.vocabulary.OntEventsVocab
-    java_import com.hp.hpl.jena.vocabulary.OWL2
-    java_import com.hp.hpl.jena.vocabulary.OWL
-    java_import com.hp.hpl.jena.vocabulary.RDF
-    java_import com.hp.hpl.jena.vocabulary.RDFS
-    java_import com.hp.hpl.jena.vocabulary.RDFSyntax
-    java_import com.hp.hpl.jena.vocabulary.ReasonerVocabulary
-    java_import com.hp.hpl.jena.vocabulary.ResultSet
-    java_import com.hp.hpl.jena.vocabulary.RSS
-    java_import com.hp.hpl.jena.vocabulary.VCARD
-    java_import com.hp.hpl.jena.vocabulary.XSD
+    include_package "com.hp.hpl.jena.vocabulary"
   end
 
   module Query

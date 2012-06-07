@@ -39,9 +39,6 @@ end
 module Java
   module ComHpHplJenaEnhanced
     class EnhNode
-      alias resource? isResource
-      alias literal? isLiteral
-
       def types
         Jena::Node.types self
       end
@@ -50,6 +47,11 @@ module Java
 
   module ComHpHplJenaRdfModelImpl
     class ResourceImpl
+      # Return the resource types
+      def types
+        Jena::Node.types self
+      end
+
       # Yield to the given block for each statement of this resource with predicate
       # `property`. If `property` is nil, yield to the block for every statement whose
       # subject is this resource.

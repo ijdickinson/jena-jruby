@@ -1,4 +1,5 @@
 $LOAD_PATH.push "#{File.dirname(__FILE__)}/../lib"
+$LOAD_PATH.push "#{File.dirname(__FILE__)}/../javalib"
 require "rubygems"
 require "test/unit"
 require "jena_jruby"
