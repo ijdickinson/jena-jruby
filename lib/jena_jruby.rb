@@ -153,6 +153,17 @@ module Jena
     java_import com.hp.hpl.jena.tdb.TDBLoader
     java_import com.hp.hpl.jena.tdb.TDBFactory
   end
+
+  module Assembler
+    java_import com.hp.hpl.jena.assembler.Assembler
+    java_import com.hp.hpl.jena.assembler.Content
+    java_import com.hp.hpl.jena.assembler.AssemblerHelp
+    java_import com.hp.hpl.jena.assembler.JA
+    java_import com.hp.hpl.jena.assembler.Mode
+    java_import com.hp.hpl.jena.assembler.ModelExpansion
+    java_import com.hp.hpl.jena.assembler.ImportManager
+    java_import com.hp.hpl.jena.assembler.RuleSet
+  end
 end
 
 %w[
