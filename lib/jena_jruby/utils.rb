@@ -12,9 +12,9 @@ module Jena
       pm
     end
 
-    # Return a new resource URN made from a UUID
-    def self.uuid_resource
-      Core::ResourceFactory.createResource( Util::JenaUUID.factory.generate.asURN )
+    # Return a new resource URN made from a UUID. If the given
+    def self.uuid_resource( model )
+      (model || Core::ResourceFactory).createResource( Util::JenaUUID.factory.generate.asURN )
     end
 
     # Return the current time as a literal
