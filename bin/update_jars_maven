@@ -25,8 +25,8 @@ cp $tdb_root/target/dependency/*.jar javalib
 cp $tdb_root/target/jena-tdb-*SNAPSHOT.jar $tdb_root/target/tdb-*{0,1,2,3,4,5,6,7,8,9}.jar javalib  2>/dev/null
 rm -f javalib/*test*.jar
 
-#echo "Creating log4j config"
-#jar -cf javalib/log4j-config.jar log4j.xml
+echo "Creating log4j config"
+jar -cf javalib/log4j-config.jar log4j.xml
 
 
 

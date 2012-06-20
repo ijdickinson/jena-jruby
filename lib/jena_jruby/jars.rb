@@ -2,6 +2,7 @@
 # Use mvn dependency:tree to show deps from the pom.xml
 
 %w[
+log4j-config.jar
 log4j-1.2.16.jar
 slf4j-api-1.6.4.jar
 slf4j-log4j12-1.6.4.jar
