@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform.new("java")
   s.authors     = ["Ian Dickinson"]
   s.email       = ["ian@epimorphics.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/ephemerian/jena-jruby"
   s.summary     = %q{JRuby wrapper for Apache Jena}
   s.description = %q{A simple packaging of Apache Jena for JRuby}
 
