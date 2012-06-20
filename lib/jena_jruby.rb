@@ -91,19 +91,29 @@ module Jena
 
   module Query
     java_import com.hp.hpl.jena.query.ARQ
-    java_import com.hp.hpl.jena.query.DatasetFactory
+    java_import com.hp.hpl.jena.query.BIOInput
     java_import com.hp.hpl.jena.query.Dataset
+    java_import com.hp.hpl.jena.query.DatasetFactory
     java_import com.hp.hpl.jena.query.DataSource
-    java_import com.hp.hpl.jena.query.QueryExecutionFactory
-    java_import com.hp.hpl.jena.query.QueryExecution
-    java_import com.hp.hpl.jena.query.QueryFactory
+    java_import com.hp.hpl.jena.query.LabelExistsException
+    java_import com.hp.hpl.jena.query.ParameterizedSparqlString
     java_import com.hp.hpl.jena.query.Query
+    java_import com.hp.hpl.jena.query.QueryBuildException
+    java_import com.hp.hpl.jena.query.QueryCancelledException
+    java_import com.hp.hpl.jena.query.QueryException
+    java_import com.hp.hpl.jena.query.QueryExecException
+    java_import com.hp.hpl.jena.query.QueryExecution
+    java_import com.hp.hpl.jena.query.QueryExecutionFactory
+    java_import com.hp.hpl.jena.query.QueryFactory
+    java_import com.hp.hpl.jena.query.QueryFatalException
+    java_import com.hp.hpl.jena.query.QueryParseException
     java_import com.hp.hpl.jena.query.QuerySolution
     java_import com.hp.hpl.jena.query.QuerySolutionMap
     java_import com.hp.hpl.jena.query.QueryVisitor
+    java_import com.hp.hpl.jena.query.ReadWrite
+    java_import com.hp.hpl.jena.query.ResultSet
     java_import com.hp.hpl.jena.query.ResultSetFactory
     java_import com.hp.hpl.jena.query.ResultSetFormatter
-    java_import com.hp.hpl.jena.query.ResultSet
     java_import com.hp.hpl.jena.query.ResultSetRewindable
     java_import com.hp.hpl.jena.query.SortCondition
     java_import com.hp.hpl.jena.query.Syntax
