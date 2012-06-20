@@ -13,7 +13,7 @@ module Jena
     end
 
     # Return a new resource URN made from a UUID. If the given
-    def self.uuid_resource( model )
+    def self.uuid_resource( model = nil )
       (model || Core::ResourceFactory).createResource( Util::JenaUUID.factory.generate.asURN )
     end
 
