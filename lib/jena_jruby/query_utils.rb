@@ -71,8 +71,12 @@ module Jena
     # @param options [Hash] Options (see above)
     # @return [Array] Non-empty array of hashes, one per result
     def self.describe( m, query, options = nil )
-      qexec = setup_query_execution( m, query, options )
+      describe_qe( setup_query_execution( m, query, options ) )
+    end
 
+    # Perform a describe query using the given query execution object, and
+    # return the resulting model
+    def self.describe_qe( qexec )
       begin
         return qexec.execDescribe
       ensure
@@ -144,6 +148,11 @@ module Jena
     # the given SPARQL service endpoint URL
     def self.service_select_each( url, query, *vars, &block )
       select_each_qe( sparql_service( url, query ), *vars, &block )
+    end
+
+    # Return a model from a describe query against a remote SPARQL endpoint
+    def self.service_describe( url, query )
+      describe_qe( sparql_service( url, query ) )
     end
 
     :private
