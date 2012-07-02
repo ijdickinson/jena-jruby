@@ -103,4 +103,14 @@ class QueryUtilsTest < Test::Unit::TestCase
     result = Jena::Query.select_first @m, "select * {?s ?p 42}"
     assert_nil result
   end
+
+  # SPARQL formatting tests
+  def test_sparql_format
+    assert_equal "<http://foo.bar>", Jena::Query.sparql_format( @m.create_resource( "http://foo.bar" ))
+    assert_equal '"foo"', Jena::Query.sparql_format( @m.create_literal( "foo" ))
+    assert_equal '"42"^^<http://www.w3.org/2001/XMLSchema#long>', Jena::Query.sparql_format( @m.create_typed_literal( 42 ))
+    assert_equal "foo:bar", Jena::Query.sparql_format( "foo:bar" )
+    assert_equal "<http://foo.bar>", Jena::Query.sparql_format( "http://foo.bar" )
+    assert Jena::Query.sparql_format( @m.create_resource ).match( /_:([[:alnum:]]*)/ )
+  end
 end

@@ -155,6 +155,27 @@ module Jena
       describe_qe( sparql_service( url, query ) )
     end
 
+    # Format a given value in a manner suitable for inclusion in a SPARQL query
+    def self.sparql_format( value )
+      if value.is_a? Core::Resource
+        value.is_anon ? "_:#{value.get_id.to_string.gsub(/[^[[:alnum:]]]/, '_')}" : "<#{value.get_uri}>"
+      elsif value.is_a? Core::Literal
+        if dt = value.get_datatype_uri
+          "\"#{value.get_lexical_form}\"^^<#{dt}>"
+        else
+          "\"#{value.to_string}\""
+        end
+      elsif value.to_s =~ /\A(file|http):\/\//
+        "<#{value}>"
+      elsif value.to_s =~ /\A[-_[[:alnum:]]]*:/
+        # looks like a qname
+        value.to_s
+      else
+        # guess
+        "\"#{value.to_s}\""
+      end
+    end
+
     :private
 
     def self.option( options, opt, default )
