@@ -38,7 +38,6 @@ module Jena
     java_import com.hp.hpl.jena.rdf.model.ResourceFactory
     java_import com.hp.hpl.jena.rdf.model.Resource
     java_import com.hp.hpl.jena.rdf.model.RSIterator
-    java_import com.hp.hpl.jena.rdf.model.Schema
     java_import com.hp.hpl.jena.rdf.model.Selector
     java_import com.hp.hpl.jena.rdf.model.Seq
     java_import com.hp.hpl.jena.rdf.model.SimpleSelector
@@ -61,13 +60,10 @@ module Jena
     java_import com.hp.hpl.jena.util.LocatorURL
     java_import com.hp.hpl.jena.util.LocatorZip
     java_import com.hp.hpl.jena.util.Metadata
-    java_import com.hp.hpl.jena.util.ModelLoader
-    java_import com.hp.hpl.jena.util.ModelQueryUtil
     java_import com.hp.hpl.jena.util.MonitorGraph
     java_import com.hp.hpl.jena.util.MonitorModel
     java_import com.hp.hpl.jena.util.OneToManyMap
     java_import com.hp.hpl.jena.util.PrintUtil
-    java_import com.hp.hpl.jena.util.QueryMapper
     java_import com.hp.hpl.jena.util.ResourceUtils
     java_import com.hp.hpl.jena.util.SystemUtils
     java_import com.hp.hpl.jena.util.Tokenizer
@@ -94,7 +90,6 @@ module Jena
     java_import com.hp.hpl.jena.query.BIOInput
     java_import com.hp.hpl.jena.query.Dataset
     java_import com.hp.hpl.jena.query.DatasetFactory
-    java_import com.hp.hpl.jena.query.DataSource
     java_import com.hp.hpl.jena.query.LabelExistsException
     java_import com.hp.hpl.jena.query.ParameterizedSparqlString
     java_import com.hp.hpl.jena.query.Query

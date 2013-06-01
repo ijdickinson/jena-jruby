@@ -16,13 +16,13 @@ module Jena
     #     Jena.querySelect( m, 'select * where {?s ?p ?o}' )
     #     Jena.querySelect( m, 'select * where {?s ?p ?o}', {}, "s" )
     #     Jena.querySelect( m, 'select * where {?s ?p foo:bar}',
-    #       {:ns => {"foo", "http://example.com/foo#"}}, "s" )
+    #       {:ns => {"foo" => "http://example.com/foo#"}}, "s" )
     #
     # @param m [Model] The model to run the query against
     # @param query [String] The query to run
     # @param options [Hash] Options (see above)
     # @param *vars [String] Optional variables to project from results
-    # @return [Array] Non-empty array of hashes, one per result
+    # @return [Array] Non-nil array of hashes, one per result
     def self.select( m, query, options = nil, *vars )
       results = []
       select_each( m, query, options, *vars ) {|soln| results << soln}
@@ -196,9 +196,9 @@ module Jena
       syntax = option( options, :syntax, com.hp.hpl.jena.query.Syntax.syntaxSPARQL_11 )
 
       QueryFactory.parse( q, query, baseURI, syntax )
-      qexec = QueryExecutionFactory.create( q, m, as_bindings( option( options, :bindings, nil ) ) )
+      bindings = as_bindings( option( options, :bindings, nil ) )
 
-      qexec
+      bindings ? QueryExecutionFactory.create( q, m, bindings ) : QueryExecutionFactory.create( q, m )
     end
 
   end
