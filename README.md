@@ -207,7 +207,6 @@ You can then generate a list of the downloaded `jar`s for inclusion in the proje
     httpclient-4.2.6.jar
     jena-arq-2.12.0.jar
     jena-tdb-1.1.0.jar
-    ~/workspace/jena-jruby
 
 To build the gem itself:
 
