@@ -76,7 +76,6 @@ module Jena
     java_import com.hp.hpl.jena.shared.LockNone
     java_import com.hp.hpl.jena.shared.PrefixMapping
     java_import com.hp.hpl.jena.shared.RandomOrderGraph
-    java_import com.hp.hpl.jena.shared.ReificationStyle
     java_import com.hp.hpl.jena.shared.uuid.JenaUUID
     java_import com.hp.hpl.jena.shared.uuid.UUIDFactory
   end
