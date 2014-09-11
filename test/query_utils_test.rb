@@ -1,10 +1,10 @@
 $LOAD_PATH.push "#{File.dirname(__FILE__)}/../lib"
 $LOAD_PATH.push "#{File.dirname(__FILE__)}/../javalib"
-require "rubygems"
-require "test/unit"
+
+require "minitest/autorun"
 require "jena_jruby"
 
-class QueryUtilsTest < Test::Unit::TestCase
+class QueryUtilsTest < Minitest::Test
 
   def setup
     @m = Jena::Core::ModelFactory.createDefaultModel
@@ -108,9 +108,18 @@ class QueryUtilsTest < Test::Unit::TestCase
   def test_sparql_format
     assert_equal "<http://foo.bar>", Jena::Query.sparql_format( @m.create_resource( "http://foo.bar" ))
     assert_equal '"foo"', Jena::Query.sparql_format( @m.create_literal( "foo" ))
-    assert_equal '"42"^^<http://www.w3.org/2001/XMLSchema#long>', Jena::Query.sparql_format( @m.create_typed_literal( 42 ))
+
+    tl = create_typed_literal( 42 )
+    assert_equal '"42"^^<http://www.w3.org/2001/XMLSchema#long>', Jena::Query.sparql_format( tl )
+
     assert_equal "foo:bar", Jena::Query.sparql_format( "foo:bar" )
     assert_equal "<http://foo.bar>", Jena::Query.sparql_format( "http://foo.bar" )
     assert Jena::Query.sparql_format( @m.create_resource ).match( /_:([[:alnum:]]*)/ )
   end
+
+  def create_typed_literal( v )
+    method = @m.java_method( :createTypedLiteral, [java.lang.Object] )
+    method.call( v )
+  end
+
 end

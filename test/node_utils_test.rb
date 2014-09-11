@@ -1,10 +1,10 @@
 $LOAD_PATH.push "#{File.dirname(__FILE__)}/../lib"
 $LOAD_PATH.push "#{File.dirname(__FILE__)}/../javalib"
-require "rubygems"
-require "test/unit"
+
+require "minitest/autorun"
 require "jena_jruby"
 
-class NodeUtilsTest < Test::Unit::TestCase
+class NodeUtilsTest < Minitest::Test
 
   def setup
     @m = Jena::Core::ModelFactory.createDefaultModel
@@ -23,7 +23,7 @@ class NodeUtilsTest < Test::Unit::TestCase
   end
 
   def test_literal_types
-    lit = @m.createTypedLiteral( 10 )
+    lit = create_typed_literal( 10 )
     types = lit.types
     assert_equal "http://www.w3.org/2001/XMLSchema#long", types.first.getURI
     assert_equal 1, types.length
@@ -69,4 +69,12 @@ class NodeUtilsTest < Test::Unit::TestCase
     assert_equal [@r1], r.property_values( Jena::Vocab::RDF.type.getURI, @m )
     assert_equal [@r1], r.property_values( "rdf:type", @m )
   end
+
+  :private
+
+  def create_typed_literal( v )
+    method = @m.java_method( :createTypedLiteral, [java.lang.Object] )
+    method.call( v )
+  end
+
 end
