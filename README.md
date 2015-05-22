@@ -9,7 +9,7 @@ conveniently from JRuby.
 This gem provides the following benefits:
 
 * a single dependency which includes all of the `.jar` files for the latest release
-of Jena (currently 2.12.0) including TDB.
+of Jena (currently 2.13.0) including TDB.
 
 * import of some of the key classes used by Jena-based programs into a `Jena::`
 module, to make code more compact
