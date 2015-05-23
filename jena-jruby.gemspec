@@ -1,6 +1,8 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("./lib", __FILE__)
-load "lib/jena_jruby/version.rb"
+Kernel::load "lib/jena_jruby/version.rb"
+
+Kernel::load "bin/update_jena", true
 
 Gem::Specification.new do |s|
   s.name        = "jena-jruby"
@@ -8,7 +10,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform.new("java")
   s.authors     = ["Ian Dickinson", "Bruno Ferreira"]
   s.email       = ["ian@epimorphics.com", "chalkos@chalkos.net"]
-  s.homepage    = "https://github.com/ijdickinson/jena-jruby"
+  s.homepage    = "https://github.com/chalkos/jena-jruby"
   s.summary     = %q{JRuby wrapper for Apache Jena}
   s.description = %q{A simple packaging of Apache Jena for JRuby}
 
