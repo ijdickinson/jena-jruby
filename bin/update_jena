@@ -1,11 +1,14 @@
 #!/usr/bin/env ruby
-$:.push File.expand_path("../lib", __FILE__)
+lib = File.expand_path('../../lib/', __FILE__)
+$:.unshift lib unless $:.include?(lib)
+
 require 'rubygems'
 require 'fileutils'
 require 'open-uri'
-load 'lib/jruby_jena/version.rb'
 
-LATEST_JENA="http://sourceforge.net/projects/jena/files/Jena/Jena-#{Jena::JENA_VERSION}/jena-#{Jena::JENA_VERSION}.zip/download"
+require 'jena_jruby/version.rb'
+
+LATEST_JENA="http://archive.apache.org/dist/jena/binaries/apache-jena-#{Jena::JENA_VERSION}.zip"
 OUTPUT="downloads/jena-#{Jena::JENA_VERSION}.zip"
 
 FileUtils.mkdir_p "downloads"
@@ -21,8 +24,8 @@ end
 
 `unzip -jo #{OUTPUT} **/lib/*.jar -x '**/lib/junit*.jar' '**/lib/*tests.jar' -d javalib`
 
-puts "Writing lib/jruby_jena/jars.rb ..."
-r = File.open( 'lib/jruby_jena/jars.rb', 'w' )
+puts "Writing lib/jena_jruby/jars.rb ..."
+r = File.open( 'lib/jena_jruby/jars.rb', 'w' )
 Dir.glob( 'javalib/*.jar' ).each do |f|
   f =~ /javalib\/(.*)\.jar/
   r << "require '#{$1}'\n"
