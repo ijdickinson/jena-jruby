@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Ian Dickinson", "Bruno Ferreira"]
   s.email       = ["ian@epimorphics.com", "chalkos@chalkos.net"]
   s.licenses    = 'Apache License, Version 2.0'
-  s.homepage    = "https://github.com/chalkos/jena-jruby"
+  s.homepage    = "https://github.com/ijdickinson/jena-jruby"
   s.summary     = %q{JRuby wrapper for Apache Jena}
   s.description = %q{A simple packaging of Apache Jena for JRuby}
 
