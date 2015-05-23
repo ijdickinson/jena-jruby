@@ -1,8 +1,11 @@
 # -*- encoding: utf-8 -*-
-$:.push File.expand_path("./lib", __FILE__)
-require_relative "lib/jena_jruby/version.rb"
+lib = File.expand_path('../lib/', __FILE__)
+$:.unshift lib unless $:.include?(lib)
 
-Kernel::load "bin/update_jena", true
+require "jena_jruby/version.rb"
+
+# ensure we have the javalibs
+Kernel::load File.expand_path('../bin/update_jena', __FILE__), true
 
 Gem::Specification.new do |s|
   s.name        = "jena-jruby"
