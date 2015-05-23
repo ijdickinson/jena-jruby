@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("./lib", __FILE__)
-Kernel::load "lib/jena_jruby/version.rb"
+require_relative "lib/jena_jruby/version.rb"
 
 Kernel::load "bin/update_jena", true
 

@@ -4,7 +4,7 @@ require 'rubygems'
 require 'fileutils'
 require 'open-uri'
 
-Kernel::load 'lib/jena_jruby/version.rb'
+require_relative '../lib/jena_jruby/version.rb'
 
 LATEST_JENA="http://archive.apache.org/dist/jena/binaries/apache-jena-#{Jena::JENA_VERSION}.zip"
 OUTPUT="downloads/jena-#{Jena::JENA_VERSION}.zip"
